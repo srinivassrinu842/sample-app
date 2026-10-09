@@ -1,0 +1,14 @@
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: sample-app-placement
+  namespace: sample-dr-app
+spec:
+  predicates:
+  - requiredClusterSelector:
+      labelSelector:
+        matchExpressions:
+        - key: site
+          operator: In
+          values:
+          - mro
