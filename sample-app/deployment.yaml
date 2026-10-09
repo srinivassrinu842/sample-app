@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+apiVersion: apps.v1
 kind: Deployment
 metadata:
   name: sample-dr-app
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: web
-        image: quay.io/rh-ee-devsecops/hello-world:latest
+        image: quay.io/openshift/origin-hello-openshift:latest
         ports:
         - containerPort: 8080
 ---
@@ -40,3 +40,5 @@ spec:
   to:
     kind: Service
     name: sample-dr-app
+  port:
+    targetPort: 8080
