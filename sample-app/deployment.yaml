@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-dr-app
+  namespace: sample-dr-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sample-dr-app
+  template:
+    metadata:
+      labels:
+        app: sample-dr-app
+    spec:
+      containers:
+      - name: web
+        image: quay.io/rh-ee-devsecops/hello-world:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-dr-app
+  namespace: sample-dr-app
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: sample-dr-app
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: sample-dr-app
+  namespace: sample-dr-app
+spec:
+  to:
+    kind: Service
+    name: sample-dr-app
